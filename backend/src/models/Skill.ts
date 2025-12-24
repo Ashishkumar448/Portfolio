@@ -27,8 +27,9 @@ const skillSchema = new Schema<ISkill>({
   },
   yearsOfExperience: {
     type: Number,
-    required: true,
+    required: false,
     min: 0,
+    default: 0,
   },
   featured: {
     type: Boolean,

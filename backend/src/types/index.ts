@@ -60,7 +60,7 @@ export interface ISkill extends Document {
   proficiency: number;
   icon?: string;
   description?: string;
-  yearsOfExperience: number;
+  yearsOfExperience?: number;
   featured: boolean;
   createdAt: Date;
   updatedAt: Date;

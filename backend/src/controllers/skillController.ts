@@ -65,9 +65,9 @@ export const createSkill = async (req: Request, res: Response, next: NextFunctio
       name: sanitizeInput.string(req.body.name),
       category: sanitizeInput.string(req.body.category) as ISkill['category'],
       proficiency: sanitizeInput.number(req.body.proficiency),
-      yearsOfExperience: sanitizeInput.number(req.body.yearsOfExperience),
-      description: sanitizeInput.string(req.body.description),
-      featured: sanitizeInput.boolean(req.body.featured),
+      ...(req.body.yearsOfExperience !== undefined && { yearsOfExperience: sanitizeInput.number(req.body.yearsOfExperience) }),
+      ...(req.body.description && { description: sanitizeInput.string(req.body.description) }),
+      ...(req.body.featured !== undefined && { featured: sanitizeInput.boolean(req.body.featured) }),
     };
     
     // ✅ Now TypeScript knows icon is allowed

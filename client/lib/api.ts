@@ -9,7 +9,7 @@ class ApiClient {
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
-    
+
     const config: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
@@ -19,22 +19,23 @@ class ApiClient {
     };
 
     const response = await fetch(url, config);
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     return response.json();
   }
 
   // Projects
-  async getProjects(params?: { page?: number; limit?: number; category?: string; search?: string }) {
+  async getProjects(params?: { page?: number; limit?: number; category?: string; search?: string; featured?: boolean }) {
     const searchParams = new URLSearchParams();
     if (params?.page) searchParams.append('page', params.page.toString());
     if (params?.limit) searchParams.append('limit', params.limit.toString());
     if (params?.category) searchParams.append('category', params.category);
     if (params?.search) searchParams.append('search', params.search);
-    
+    if (params?.featured) searchParams.append('featured', 'true');
+
     return this.request(`/projects?${searchParams}`);
   }
 
@@ -53,7 +54,7 @@ class ApiClient {
     if (params?.limit) searchParams.append('limit', params.limit.toString());
     if (params?.category) searchParams.append('category', params.category);
     if (params?.search) searchParams.append('search', params.search);
-    
+
     return this.request(`/blogs?${searchParams}`);
   }
 
@@ -83,7 +84,7 @@ class ApiClient {
     const searchParams = new URLSearchParams();
     if (params?.page) searchParams.append('page', params.page.toString());
     if (params?.limit) searchParams.append('limit', params.limit.toString());
-    
+
     return this.request(`/comments/blog/${blogId}?${searchParams}`);
   }
 

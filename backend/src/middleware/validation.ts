@@ -127,7 +127,7 @@ export const validateSkill = [
     .matches(/^[a-zA-Z0-9\s\-_\.\+#]+$/).withMessage('Invalid skill name format'),
   body('category').isIn(['frontend', 'backend', 'database', 'tools', 'other']).withMessage('Invalid category'),
   body('proficiency').isInt({ min: 1, max: 100 }).withMessage('Proficiency must be between 1-100'),
-  body('yearsOfExperience').isFloat({ min: 0, max: 50 }).withMessage('Years of experience must be 0-50'),
+  body('yearsOfExperience').optional().isFloat({ min: 0, max: 50 }).withMessage('Years of experience must be 0-50'),
   body('description')
     .optional()
     .trim()

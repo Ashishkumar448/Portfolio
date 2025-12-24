@@ -9,9 +9,11 @@ export default function AddSkillPage() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    category: '',
-    proficiencyLevel: 1,
-    icon: ''
+    category: 'frontend',
+    proficiency: 1,
+    icon: '',
+    description: '',
+    featured: false
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,11 +30,11 @@ export default function AddSkillPage() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'proficiencyLevel' ? parseInt(value) : value
+      [name]: name === 'proficiency' ? parseInt(value) : value
     }));
   };
 
@@ -55,25 +57,30 @@ export default function AddSkillPage() {
 
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-2">Category</label>
-          <input
-            type="text"
+          <select
             name="category"
             value={formData.category}
             onChange={handleChange}
             required
             className="w-full p-3 bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-2 focus:ring-blue-500"
-          />
+          >
+            <option value="frontend">Frontend</option>
+            <option value="backend">Backend</option>
+            <option value="database">Database</option>
+            <option value="tools">Tools</option>
+            <option value="other">Other</option>
+          </select>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Proficiency Level (1-10)</label>
+          <label className="block text-sm font-medium text-gray-300 mb-2">Proficiency Level (1-100)</label>
           <input
             type="number"
-            name="proficiencyLevel"
-            value={formData.proficiencyLevel}
+            name="proficiency"
+            value={formData.proficiency}
             onChange={handleChange}
             min="1"
-            max="10"
+            max="100"
             required
             className="w-full p-3 bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-2 focus:ring-blue-500"
           />
@@ -86,9 +93,34 @@ export default function AddSkillPage() {
             name="icon"
             value={formData.icon}
             onChange={handleChange}
-            placeholder="Icon name or URL"
+            placeholder="Emoji or icon (e.g., ⚛️, 🔥)"
             className="w-full p-3 bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">Description (optional)</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            rows={3}
+            placeholder="Brief description of the skill"
+            className="w-full p-3 bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
+          />
+        </div>
+
+        <div>
+          <label className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              name="featured"
+              checked={formData.featured}
+              onChange={(e) => setFormData(prev => ({ ...prev, featured: e.target.checked }))}
+              className="w-4 h-4 text-blue-600 bg-gray-600 border-gray-500 rounded focus:ring-blue-500"
+            />
+            <span className="text-sm font-medium text-gray-300">Featured Skill</span>
+          </label>
         </div>
 
         <div className="flex gap-4">
